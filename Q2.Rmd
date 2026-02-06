@@ -1,0 +1,52 @@
+---
+title: "Assignment Q2"
+output: word_document
+date: "2025-12-23"
+---
+
+```{r}
+rm(list = ls())
+set.seed(2233)
+
+prior <- rep(0.25, 4)
+
+A_no <- round(runif(4, 0, 1), 2)
+B_no <- round(runif(4, 0, 1), 2)
+
+A_yes <- round(1 - A_no, 2)
+B_yes <- round(1 - B_no, 2)
+
+tab <- data.frame(
+  Location = paste0("Location ", 1:4),
+  Prior = prior,
+  A_No_Distraction = A_no,
+  A_Yes_Distraction = A_yes,
+  B_No_NoSeat = B_no,
+  B_Yes_NoSeat = B_yes
+)
+
+tab
+```
+
+## (ii) Bayes: Distraction = Yes
+
+```{r}
+num_D <- tab$A_Yes_Distraction * tab$Prior
+post_D <- num_D / sum(num_D)
+tab$P_L_given_DistractionYes <- round(post_D, 4)
+tab
+```
+
+## (iii) Bayes: No Seat = Yes
+
+```{r}
+num_S <- tab$B_Yes_NoSeat * tab$Prior
+post_S <- num_S / sum(num_S)
+tab$P_L_given_NoSeatYes <- round(post_S, 4)
+tab
+```
+
+## (iv) Conclusion
+
+- Distraction (Yes): most likely Location 1 (0.3093).
+- No Seat (Yes): most likely Location 4 (0.5714).
